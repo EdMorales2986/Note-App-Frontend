@@ -4,7 +4,7 @@ import React from "react";
 export default function FormHeaader() {
   return (
     <View>
-      <Text>FormHeaader</Text>
+      <Text>FormHeader</Text>
     </View>
   );
 }
