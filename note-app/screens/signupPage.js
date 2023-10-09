@@ -1,75 +1,58 @@
 import react, { useState } from "react";
 import {
-  loginStyleSheet,
-  Image,
+  StyleSheet,
   Text,
   TextInput,
   View,
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
-  Button,
 } from "react-native";
-// import Ionicons from "@expo/vector-icons/Ionicons";
 import { AntDesign } from "@expo/vector-icons";
-
-import { loginStyles } from "../styles/globalStyles";
+import { signupStyles } from "../styles/globalStyles";
 import { Formik } from "formik";
 import axios from "axios";
 
-export default function LoginPage() {
+export default function SignUpPage() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [lname, setLname] = useState("");
+  const [mail, setMail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const toggleShowPassword = () => {
+  const toggleShowPassword = ({ navigation }) => {
     setShowPassword(!showPassword);
   };
 
   const submitData = async (e) => {
     // console.log(e.alias, e.password);
     try {
-      // MAFER, para que axios funcione el segmento de la Ip lo tienes que sustituir
-      // con el que te tira Metro despues de correr 'npx expo start' o 'npm run start'
-      const http = await axios.post("http://192.168.222.211:4000/signin", {
+      const http = await axios.post("http://192.168.0.182:4000/signup", {
         alias: e.alias,
+        email: e.email,
+        name: e.name,
+        lname: e.lname,
         password: e.password,
       });
-      console.log(http.data);
+      navigation.goBack();
+      //   console.log(http.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}
-    >
-      <View style={loginStyles.container}>
-        <Text
-          style={{
-            paddingBottom: 200,
-            paddingTop: 150,
-            fontSize: 24,
-            color: "#092C70",
-          }}
-        >
-          Notes
-        </Text>
-        <Text
-          style={{
-            marginBottom: 50,
-            fontSize: 28,
-            fontWeight: "bold",
-            color: "#092C70",
-          }}
-        >
-          Bienvenido!
-        </Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={signupStyles.container}>
         <Formik
-          initialValues={{ alias: "", password: "" }}
+          initialValues={{
+            alias: "",
+            email: "",
+            name: "",
+            lname: "",
+            password: "",
+          }}
           onSubmit={(e) => submitData(e)}
         >
           {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -80,7 +63,7 @@ export default function LoginPage() {
               }}
             >
               <TextInput
-                style={loginStyles.inputA}
+                style={signupStyles.inputs}
                 name="alias"
                 placeholder="User Name"
                 placeholderTextColor={"#092C70"}
@@ -88,9 +71,36 @@ export default function LoginPage() {
                 onBlur={handleBlur("alias")}
                 value={values.alias}
               />
-              <View style={loginStyles.passwordBox}>
+              <TextInput
+                style={signupStyles.inputs}
+                name="email"
+                placeholder="Email"
+                placeholderTextColor={"#092C70"}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+              />
+              <TextInput
+                style={signupStyles.inputs}
+                name="name"
+                placeholder="Name"
+                placeholderTextColor={"#092C70"}
+                onChangeText={handleChange("name")}
+                onBlur={handleBlur("name")}
+                value={values.name}
+              />
+              <TextInput
+                style={signupStyles.inputs}
+                name="lname"
+                placeholder="Last name"
+                placeholderTextColor={"#092C70"}
+                onChangeText={handleChange("lname")}
+                onBlur={handleBlur("lname")}
+                value={values.lname}
+              />
+              <View style={signupStyles.passwordBox}>
                 <TextInput
-                  style={loginStyles.inputB}
+                  style={signupStyles.inputs}
                   name="password"
                   secureTextEntry={!showPassword}
                   placeholder="User Password"
@@ -111,7 +121,7 @@ export default function LoginPage() {
                   onPress={toggleShowPassword}
                 >
                   <AntDesign
-                    style={loginStyles.icon}
+                    style={signupStyles.icon}
                     name="eyeo"
                     size={24}
                     color="black"
@@ -120,10 +130,10 @@ export default function LoginPage() {
               </View>
               <View>
                 <Pressable
-                  style={loginStyles.btnWrapper}
+                  style={signupStyles.btnWrapper}
                   onPress={handleSubmit}
                 >
-                  <Text style={loginStyles.btnText}>Login</Text>
+                  <Text style={signupStyles.btnText}>Sign Up</Text>
                 </Pressable>
               </View>
             </View>
@@ -133,3 +143,9 @@ export default function LoginPage() {
     </TouchableWithoutFeedback>
   );
 }
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
+});
