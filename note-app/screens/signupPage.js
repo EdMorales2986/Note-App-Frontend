@@ -13,7 +13,7 @@ import { signupStyles } from "../styles/globalStyles";
 import { Formik } from "formik";
 import axios from "axios";
 
-export default function SignUpPage() {
+export default function SignUpPage({ navigation }) {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -21,12 +21,11 @@ export default function SignUpPage() {
   const [mail, setMail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const toggleShowPassword = ({ navigation }) => {
+  const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
   const submitData = async (e) => {
-    // console.log(e.alias, e.password);
     try {
       const http = await axios.post("http://192.168.0.182:4000/signup", {
         alias: e.alias,
@@ -36,7 +35,6 @@ export default function SignUpPage() {
         password: e.password,
       });
       navigation.goBack();
-      //   console.log(http.data);
     } catch (error) {
       console.log(error);
     }

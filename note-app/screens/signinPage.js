@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,6 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { signinStyles } from "../styles/globalStyles";
 import { Formik } from "formik";
 import axios from "axios";
+import { storeData, getDataState } from "../components/storage";
 
 export default function SignInPage({ navigation }) {
   const [user, setUser] = useState("");
@@ -24,15 +25,15 @@ export default function SignInPage({ navigation }) {
   };
 
   const submitData = async (e) => {
-    // console.log(e.alias, e.password);
     try {
-      // MAFER, para que axios funcione el segmento de la Ip lo tienes que sustituir
-      // con el que te tira Metro despues de correr 'npx expo start' o 'npm run start'
       const http = await axios.post("http://192.168.0.182:4000/signin", {
         alias: e.alias,
         password: e.password,
       });
-      // console.log(http.data.user);
+      if (http) {
+        storeData(`${http.data.jwt}`);
+        navigation.replace("Home");
+      }
     } catch (error) {
       console.log(error);
     }
