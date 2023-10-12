@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Pressable, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { storeData, getDataJWT } from "./components/storage";
-import axios from "axios";
+import { removeData, removeUser } from "./components/storage";
 
 import SignInPage from "./screens/signInPage";
 import SignUpPage from "./screens/signUpPage";
@@ -12,25 +10,12 @@ import HomePage from "./screens/homePage";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [loggedIn, setState] = useState(false);
+  // const [loggedIn, setState] = useState(false);
 
-  async function verifyJWT() {
-    const jwt = await getDataJWT();
-    try {
-      const http = await axios.post("http://192.168.0.182:4000/jwt-verify", {
-        token: `${jwt}`,
-      });
-      if (http.data.state) {
-        setState(true);
-      }
-    } catch (error) {
-      console.log("Not Logged in");
-    }
+  function terminate() {
+    removeData();
+    removeUser();
   }
-
-  useEffect(() => {
-    verifyJWT();
-  }, []);
 
   return (
     <NavigationContainer>
@@ -41,22 +26,29 @@ export default function App() {
           headerTintColor: "#fff",
         }}
       >
-        {loggedIn ? (
-          <Stack.Screen name="Home" component={HomePage} />
-        ) : (
-          <>
-            <Stack.Screen name="Sign In" component={SignInPage} />
-            <Stack.Screen name="Sign Up" component={SignUpPage} />
-            <Stack.Screen name="Home" component={HomePage} />
-          </>
-        )}
+        <Stack.Screen name="Sign In" component={SignInPage} />
+        <Stack.Screen name="Sign Up" component={SignUpPage} />
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+          options={({ navigation }) => ({
+            headerBackVisible: false,
+            headerTitleAlign: "center",
+            headerLeft: () => (
+              <Pressable
+                onPress={() => {
+                  terminate();
+                  navigation.goBack();
+                }}
+              >
+                <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                  LogOut
+                </Text>
+              </Pressable>
+            ),
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

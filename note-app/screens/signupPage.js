@@ -7,6 +7,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { signupStyles } from "../styles/globalStyles";
@@ -27,7 +28,7 @@ export default function SignUpPage({ navigation }) {
 
   const submitData = async (e) => {
     try {
-      const http = await axios.post("http://192.168.0.182:4000/signup", {
+      const http = await axios.post("http://192.168.0.183:4000/signup", {
         alias: e.alias,
         email: e.email,
         name: e.name,
@@ -43,6 +44,10 @@ export default function SignUpPage({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={signupStyles.container}>
+        <Image
+          source={require("../assets/custom/notes.png")}
+          style={{ width: 200, height: 200, resizeMode: "center" }}
+        />
         <Formik
           initialValues={{
             alias: "",
@@ -68,6 +73,7 @@ export default function SignUpPage({ navigation }) {
                 onChangeText={handleChange("alias")}
                 onBlur={handleBlur("alias")}
                 value={values.alias}
+                autoCapitalize="none"
               />
               <TextInput
                 style={signupStyles.inputs}
@@ -77,6 +83,7 @@ export default function SignUpPage({ navigation }) {
                 onChangeText={handleChange("email")}
                 onBlur={handleBlur("email")}
                 value={values.email}
+                autoCapitalize="none"
               />
               <TextInput
                 style={signupStyles.inputs}
@@ -86,6 +93,7 @@ export default function SignUpPage({ navigation }) {
                 onChangeText={handleChange("name")}
                 onBlur={handleBlur("name")}
                 value={values.name}
+                autoCapitalize="none"
               />
               <TextInput
                 style={signupStyles.inputs}
@@ -95,6 +103,7 @@ export default function SignUpPage({ navigation }) {
                 onChangeText={handleChange("lname")}
                 onBlur={handleBlur("lname")}
                 value={values.lname}
+                autoCapitalize="none"
               />
               <View style={signupStyles.passwordBox}>
                 <TextInput

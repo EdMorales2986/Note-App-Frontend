@@ -7,18 +7,54 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Keyboard,
-  Button,
+  ActivityIndicator,
+  Image,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { signinStyles } from "../styles/globalStyles";
 import { Formik } from "formik";
 import axios from "axios";
-import { storeData, getDataState } from "../components/storage";
+import {
+  storeData,
+  getDataJWT,
+  removeData,
+  storeUser,
+  removeUser,
+} from "../components/storage";
 
 export default function SignInPage({ navigation }) {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  async function verifyJWT() {
+    const jwt = await getDataJWT();
+    // console.log(jwt);
+    try {
+      const http = await axios.post("http://192.168.0.183:4000/jwt-verify", {
+        token: `${jwt}`,
+      });
+      if (http.data.state) {
+        // console.log("Logged in");
+        setTimeout(() => {
+          navigation.navigate("Home");
+        }, 1000);
+      }
+    } catch (error) {
+      await removeData();
+      await removeUser();
+      setIsLoading(false);
+      console.log("Not Logged in");
+    }
+  }
+
+  useEffect(() => {
+    verifyJWT();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -26,13 +62,15 @@ export default function SignInPage({ navigation }) {
 
   const submitData = async (e) => {
     try {
-      const http = await axios.post("http://192.168.0.182:4000/signin", {
+      const http = await axios.post("http://192.168.0.183:4000/signin", {
         alias: e.alias,
         password: e.password,
       });
       if (http) {
+        // console.log(http.data.jwt);
         storeData(`${http.data.jwt}`);
-        navigation.replace("Home");
+        storeUser(`${e.alias}`);
+        navigation.navigate("Home");
       }
     } catch (error) {
       console.log(error);
@@ -43,6 +81,13 @@ export default function SignInPage({ navigation }) {
     navigation.navigate("Sign Up");
   };
 
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator size="large" color="#1A51BB" />
+      </View>
+    );
+  }
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -50,6 +95,10 @@ export default function SignInPage({ navigation }) {
       }}
     >
       <View style={signinStyles.container}>
+        <Image
+          source={require("../assets/custom/notes.png")}
+          style={{ width: 200, height: 200, resizeMode: "center" }}
+        />
         <Formik
           initialValues={{ alias: "", password: "" }}
           onSubmit={(e) => submitData(e)}
@@ -69,6 +118,7 @@ export default function SignInPage({ navigation }) {
                 onChangeText={handleChange("alias")}
                 onBlur={handleBlur("alias")}
                 value={values.alias}
+                autoCapitalize="none"
               />
               <View style={signinStyles.passwordBox}>
                 <TextInput
@@ -81,6 +131,7 @@ export default function SignInPage({ navigation }) {
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
+                  autoCapitalize="none"
                 />
                 <Pressable
                   style={{

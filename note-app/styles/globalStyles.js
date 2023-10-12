@@ -4,7 +4,7 @@ export const signinStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: 300,
+    paddingTop: 200,
     // backgroundColor: "grey",
   },
   inputs: {
@@ -43,7 +43,7 @@ export const signupStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: 300,
+    paddingTop: 100,
     // backgroundColor: "grey",
   },
   inputs: {
