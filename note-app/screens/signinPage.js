@@ -32,9 +32,13 @@ export default function SignInPage({ navigation }) {
     const jwt = await getDataJWT();
     // console.log(jwt);
     try {
-      const http = await axios.post("http://192.168.0.183:4000/jwt-verify", {
-        token: `${jwt}`,
-      });
+      const http = await axios.post(
+        // "https://note-app-backend.up.railway.app/jwt-verify",
+        "http:////192.168.0.183:4000/jwt-verify",
+        {
+          token: `${jwt}`,
+        }
+      );
       if (http.data.state) {
         // console.log("Logged in");
         setTimeout(() => {
@@ -62,10 +66,14 @@ export default function SignInPage({ navigation }) {
 
   const submitData = async (e) => {
     try {
-      const http = await axios.post("http://192.168.0.183:4000/signin", {
-        alias: e.alias,
-        password: e.password,
-      });
+      const http = await axios.post(
+        // "https://note-app-backend.up.railway.app/signin",
+        "http://192.168.0.183:4000/signin",
+        {
+          alias: e.alias,
+          password: e.password,
+        }
+      );
       if (http) {
         // console.log(http.data.jwt);
         storeData(`${http.data.jwt}`);
@@ -89,11 +97,7 @@ export default function SignInPage({ navigation }) {
     );
   }
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}
-    >
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
       <View style={signinStyles.container}>
         <Image
           source={require("../assets/custom/notes.png")}
@@ -169,9 +173,3 @@ export default function SignInPage({ navigation }) {
     </TouchableWithoutFeedback>
   );
 }
-
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-  },
-});

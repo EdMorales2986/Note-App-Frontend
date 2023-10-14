@@ -28,13 +28,17 @@ export default function SignUpPage({ navigation }) {
 
   const submitData = async (e) => {
     try {
-      const http = await axios.post("http://192.168.0.183:4000/signup", {
-        alias: e.alias,
-        email: e.email,
-        name: e.name,
-        lname: e.lname,
-        password: e.password,
-      });
+      const http = await axios.post(
+        // "https://note-app-backend.up.railway.app/signup",
+        "http://192.168.0.183:4000/signup",
+        {
+          alias: e.alias,
+          email: e.email,
+          name: e.name,
+          lname: e.lname,
+          password: e.password,
+        }
+      );
       navigation.goBack();
     } catch (error) {
       console.log(error);
@@ -116,6 +120,7 @@ export default function SignUpPage({ navigation }) {
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
                   value={values.password}
+                  autoCapitalize="none"
                 />
                 <Pressable
                   style={{
