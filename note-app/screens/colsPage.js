@@ -12,7 +12,9 @@ export default function ColsPage() {
   async function getCollections() {
     const user = await getUser();
     try {
-      const http = await axios.get(`http://192.168.0.183:4000/cols/${user}`);
+      const http = await axios.get(
+        `https://note-app-backend.up.railway.app/cols/${user}`
+      );
       if (http) {
         // console.log("update");
         setColArray(http.data);

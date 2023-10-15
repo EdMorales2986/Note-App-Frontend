@@ -24,8 +24,8 @@ export default function AccountPage({ navigation }) {
     // console.log(user);
     try {
       await axios.post(
-        // `https://note-app-backend.up.railway.app/signin/${user}/update`,
-        `http://192.168.0.183:4000/signin/${user}/update`,
+        `https://note-app-backend.up.railway.app/signin/${user}/update`,
+        // `http://192.168.0.185:4000/signin/${user}/update`,
         {
           email: e.email,
           name: e.name,
@@ -46,8 +46,8 @@ export default function AccountPage({ navigation }) {
     const user = await getUser();
     try {
       await axios.post(
-        // `https://note-app-backend.up.railway.app/signin/${user}/delete`,
-        `http://192.168.0.183:4000/signin/${user}/delete`,
+        `https://note-app-backend.up.railway.app/signin/${user}/delete`,
+        // `http://192.168.0.185:4000/signin/${user}/delete`,
         {
           password: e.password,
         }
@@ -61,140 +61,140 @@ export default function AccountPage({ navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={accountStyles.container}>
-        <Image
-          style={{
-            resizeMode: "center",
-            width: 300,
-            height: 100,
-            marginTop: 30,
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={accountStyles.container}>
+      <Image
+        style={{
+          resizeMode: "center",
+          width: 300,
+          height: 100,
+          marginTop: 30,
+        }}
+        source={require("../assets/custom/notes.png")}
+      />
+      <View style={accountStyles.F1}>
+        <Formik
+          initialValues={{
+            email: "",
+            name: "",
+            lname: "",
+            oldPass: "",
+            newPass: "",
           }}
-          source={require("../assets/custom/notes.png")}
-        />
-        <View style={accountStyles.F1}>
-          <Formik
-            initialValues={{
-              email: "",
-              name: "",
-              lname: "",
-              oldPass: "",
-              newPass: "",
-            }}
-            onSubmit={(e) => submitData(e)}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <TextInput
-                  style={accountStyles.inputs}
-                  name="email"
-                  placeholder="Email"
-                  placeholderTextColor={"#092C70"}
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  value={values.email}
-                  autoCapitalize="none"
-                />
-                <TextInput
-                  style={accountStyles.inputs}
-                  name="name"
-                  placeholder="Name"
-                  placeholderTextColor={"#092C70"}
-                  onChangeText={handleChange("name")}
-                  onBlur={handleBlur("name")}
-                  value={values.name}
-                  autoCapitalize="none"
-                />
-                <TextInput
-                  style={accountStyles.inputs}
-                  name="lname"
-                  placeholder="Last name"
-                  placeholderTextColor={"#092C70"}
-                  onChangeText={handleChange("lname")}
-                  onBlur={handleBlur("lname")}
-                  value={values.lname}
-                  autoCapitalize="none"
-                />
-                <TextInput
-                  style={accountStyles.inputs}
-                  name="oldPass"
-                  placeholder="User Old Password"
-                  placeholderTextColor={"#092C70"}
-                  maxLength={30}
-                  onChangeText={handleChange("oldPass")}
-                  onBlur={handleBlur("oldPass")}
-                  value={values.oldPass}
-                  autoCapitalize="none"
-                />
-                <TextInput
-                  style={accountStyles.inputs}
-                  name="newPass"
-                  placeholder="User New Password"
-                  placeholderTextColor={"#092C70"}
-                  maxLength={30}
-                  onChangeText={handleChange("newPass")}
-                  onBlur={handleBlur("newPass")}
-                  value={values.newPass}
-                  autoCapitalize="none"
-                />
-                <View>
-                  <Pressable
-                    style={accountStyles.btnWrapper}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={accountStyles.btnText}>Update</Text>
-                  </Pressable>
-                </View>
+          onSubmit={(e) => submitData(e)}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TextInput
+                style={accountStyles.inputs}
+                name="email"
+                placeholder="Email"
+                placeholderTextColor={"#092C70"}
+                onChangeText={handleChange("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={accountStyles.inputs}
+                name="name"
+                placeholder="Name"
+                placeholderTextColor={"#092C70"}
+                onChangeText={handleChange("name")}
+                onBlur={handleBlur("name")}
+                value={values.name}
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={accountStyles.inputs}
+                name="lname"
+                placeholder="Last name"
+                placeholderTextColor={"#092C70"}
+                onChangeText={handleChange("lname")}
+                onBlur={handleBlur("lname")}
+                value={values.lname}
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={accountStyles.inputs}
+                name="oldPass"
+                placeholder="User Old Password"
+                placeholderTextColor={"#092C70"}
+                maxLength={30}
+                onChangeText={handleChange("oldPass")}
+                onBlur={handleBlur("oldPass")}
+                value={values.oldPass}
+                autoCapitalize="none"
+              />
+              <TextInput
+                style={accountStyles.inputs}
+                name="newPass"
+                placeholder="User New Password"
+                placeholderTextColor={"#092C70"}
+                maxLength={30}
+                onChangeText={handleChange("newPass")}
+                onBlur={handleBlur("newPass")}
+                value={values.newPass}
+                autoCapitalize="none"
+              />
+              <View>
+                <Pressable
+                  style={accountStyles.btnWrapper}
+                  onPress={handleSubmit}
+                >
+                  <Text style={accountStyles.btnText}>Update</Text>
+                </Pressable>
               </View>
-            )}
-          </Formik>
-        </View>
-
-        <View style={accountStyles.F2}>
-          <Formik
-            initialValues={{
-              password: "",
-            }}
-            onSubmit={(e) => submitDeletion(e)}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <View
-                style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <TextInput
-                  style={accountStyles.inputsDelete}
-                  name="password"
-                  placeholder="User Current Password"
-                  placeholderTextColor={"#092C70"}
-                  maxLength={30}
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
-                  autoCapitalize="none"
-                />
-                <View>
-                  <Pressable
-                    style={accountStyles.btnWrapperDelete}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={accountStyles.btnTextDelete}>
-                      Delete Account
-                    </Text>
-                  </Pressable>
-                </View>
-              </View>
-            )}
-          </Formik>
-        </View>
+            </View>
+          )}
+        </Formik>
       </View>
-    </TouchableWithoutFeedback>
+
+      <View style={accountStyles.F2}>
+        <Formik
+          initialValues={{
+            password: "",
+          }}
+          onSubmit={(e) => submitDeletion(e)}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TextInput
+                style={accountStyles.inputsDelete}
+                name="password"
+                placeholder="User Current Password"
+                placeholderTextColor={"#092C70"}
+                maxLength={30}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
+                value={values.password}
+                autoCapitalize="none"
+              />
+              <View>
+                <Pressable
+                  style={accountStyles.btnWrapperDelete}
+                  onPress={handleSubmit}
+                >
+                  <Text style={accountStyles.btnTextDelete}>
+                    Delete Account
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          )}
+        </Formik>
+      </View>
+    </View>
+    // </TouchableWithoutFeedback>
   );
 }

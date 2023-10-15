@@ -23,8 +23,8 @@ export default function SimpleListItem({ title, id, watchModif }) {
     const user = await getUser();
     try {
       const http = await axios.post(
-        // "https://note-app-backend.up.railway.app/signin",
-        `http://192.168.0.183:4000/signin/${user}/cols/update/${id}`,
+        `https://note-app-backend.up.railway.app/signin/${user}/cols/update/${id}`,
+        // `http://192.168.0.185:4000/signin/${user}/cols/update/${id}`,
         {
           name: e.name,
         }
@@ -41,11 +41,8 @@ export default function SimpleListItem({ title, id, watchModif }) {
     const user = await getUser();
     try {
       const http = await axios.post(
-        // "https://note-app-backend.up.railway.app/signin",
-        `http://192.168.0.183:4000/signin/${user}/cols/delete/${id}`,
-        {
-          name: e.name,
-        }
+        `https://note-app-backend.up.railway.app/signin/${user}/cols/delete/${id}`
+        // `http://192.168.0.185:4000/signin/${user}/cols/delete/${id}`
       );
       if (http) {
         watchModif(1);

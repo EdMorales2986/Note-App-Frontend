@@ -33,8 +33,8 @@ export default function SignInPage({ navigation }) {
     // console.log(jwt);
     try {
       const http = await axios.post(
-        // "https://note-app-backend.up.railway.app/jwt-verify",
-        "http:////192.168.0.183:4000/jwt-verify",
+        `https://note-app-backend.up.railway.app/jwt-verify`,
+        // "http:////192.168.0.185:4000/jwt-verify",
         {
           token: `${jwt}`,
         }
@@ -68,7 +68,7 @@ export default function SignInPage({ navigation }) {
     try {
       const http = await axios.post(
         // "https://note-app-backend.up.railway.app/signin",
-        "http://192.168.0.183:4000/signin",
+        "http://192.168.0.185:4000/signin",
         {
           alias: e.alias,
           password: e.password,
@@ -97,79 +97,76 @@ export default function SignInPage({ navigation }) {
     );
   }
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
-      <View style={signinStyles.container}>
-        <Image
-          source={require("../assets/custom/notes.png")}
-          style={{ width: 200, height: 200, resizeMode: "center" }}
-        />
-        <Formik
-          initialValues={{ alias: "", password: "" }}
-          onSubmit={(e) => submitData(e)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+    // <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
+    <View style={signinStyles.container}>
+      <Image
+        source={require("../assets/custom/notes.png")}
+        style={{ width: 200, height: 200, resizeMode: "center" }}
+      />
+      <Formik
+        initialValues={{ alias: "", password: "" }}
+        onSubmit={(e) => submitData(e)}
+      >
+        {({ handleChange, handleBlur, handleSubmit, values }) => (
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TextInput
+              style={signinStyles.inputs}
+              name="alias"
+              placeholder="User Name"
+              placeholderTextColor={"#092C70"}
+              onChangeText={handleChange("alias")}
+              onBlur={handleBlur("alias")}
+              value={values.alias}
+              autoCapitalize="none"
+            />
+            <View style={signinStyles.passwordBox}>
               <TextInput
                 style={signinStyles.inputs}
-                name="alias"
-                placeholder="User Name"
+                name="password"
+                secureTextEntry={!showPassword}
+                placeholder="User Password"
                 placeholderTextColor={"#092C70"}
-                onChangeText={handleChange("alias")}
-                onBlur={handleBlur("alias")}
-                value={values.alias}
+                maxLength={30}
+                onChangeText={handleChange("password")}
+                onBlur={handleBlur("password")}
+                value={values.password}
                 autoCapitalize="none"
               />
-              <View style={signinStyles.passwordBox}>
-                <TextInput
-                  style={signinStyles.inputs}
-                  name="password"
-                  secureTextEntry={!showPassword}
-                  placeholder="User Password"
-                  placeholderTextColor={"#092C70"}
-                  maxLength={30}
-                  onChangeText={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
-                  autoCapitalize="none"
+              <Pressable
+                style={{
+                  borderRadius: 100,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  right: 30,
+                  zIndex: 2,
+                }}
+                onPress={toggleShowPassword}
+              >
+                <AntDesign
+                  style={signinStyles.icon}
+                  name="eyeo"
+                  size={24}
+                  color="black"
                 />
-                <Pressable
-                  style={{
-                    borderRadius: 100,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    right: 30,
-                    zIndex: 2,
-                  }}
-                  onPress={toggleShowPassword}
-                >
-                  <AntDesign
-                    style={signinStyles.icon}
-                    name="eyeo"
-                    size={24}
-                    color="black"
-                  />
-                </Pressable>
-              </View>
-              <View>
-                <Pressable
-                  style={signinStyles.btnWrapper}
-                  onPress={handleSubmit}
-                >
-                  <Text style={signinStyles.btnText}>Sign In</Text>
-                </Pressable>
-              </View>
+              </Pressable>
             </View>
-          )}
-        </Formik>
-        <Pressable style={{ marginTop: 10 }} onPress={goToSignUp}>
-          <Text> Don't have an account </Text>
-        </Pressable>
-      </View>
-    </TouchableWithoutFeedback>
+            <View>
+              <Pressable style={signinStyles.btnWrapper} onPress={handleSubmit}>
+                <Text style={signinStyles.btnText}>Sign In</Text>
+              </Pressable>
+            </View>
+          </View>
+        )}
+      </Formik>
+      <Pressable style={{ marginTop: 10 }} onPress={goToSignUp}>
+        <Text> Don't have an account </Text>
+      </Pressable>
+    </View>
+    // </TouchableWithoutFeedback>
   );
 }
