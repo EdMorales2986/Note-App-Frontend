@@ -27,7 +27,7 @@ export default function ColsPage() {
   useEffect(() => {
     getCollections();
     watchModif(0);
-  }, [colModif]);
+  });
 
   return (
     <ImageBackground
@@ -45,12 +45,12 @@ export default function ColsPage() {
             <SimpleListItem
               title={item.name}
               id={item._id}
-              watchModif={watchModif}
+              // watchModif={watchModif}
             />
           )}
         />
       </View>
-      <CircleButton watchModif={watchModif} />
+      <CircleButton /*watchModif={watchModif}*/ />
     </ImageBackground>
   );
 }

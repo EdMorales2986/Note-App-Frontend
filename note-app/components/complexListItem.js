@@ -7,13 +7,7 @@ import { getUser } from "./storage";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 
-export default function ComplexListItem({
-  title,
-  content,
-  id,
-  collection,
-  watchModif,
-}) {
+export default function ComplexListItem({ title, content, id, collection }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [TITLE, setTitle] = useState(title);
   const [CONTENT, setContent] = useState(content);
@@ -29,7 +23,6 @@ export default function ComplexListItem({
       );
       if (http) {
         // console.log("update");
-        watchModif(1);
         setColArray(http.data);
       }
     } catch (error) {
@@ -39,9 +32,10 @@ export default function ComplexListItem({
 
   useEffect(() => {
     getCollections();
-  }, [colArray]);
+  }, []);
 
   const handleOpenModal = () => {
+    getCollections();
     setModalVisible(true);
   };
 
@@ -62,7 +56,6 @@ export default function ComplexListItem({
         }
       );
       if (http) {
-        watchModif(1);
         handleCloseModal();
       }
     } catch (error) {
@@ -76,9 +69,6 @@ export default function ComplexListItem({
         `https://note-app-backend.up.railway.app/signin/${user}/notes/delete/${id}`
         // `http://192.168.0.185:4000/signin/${user}/notes/delete/${id}`
       );
-      if (http) {
-        watchModif(1);
-      }
     } catch (error) {
       console.log(error);
     }
@@ -99,7 +89,7 @@ export default function ComplexListItem({
       </View>
       <Modal
         visible={modalVisible}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => handleCloseModal()}
       >
         <View>

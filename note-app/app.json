@@ -11,33 +11,28 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.noteapp"
+      "icon": "./assets/icon.png",
+
+      "package": "com.noteapp.noteapp"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "3cddc855-d186-4944-ae94-b6abb96f5581"
+        "projectId": "aafe1b9a-d2bf-4aa6-88f3-935c548ce314"
       }
-    }
+    },
+    "owner": "ed0811"
   }
 }

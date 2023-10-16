@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { getUser } from "./storage";
 import axios from "axios";
 
-export default function SimpleListItem({ title, id, watchModif }) {
+export default function SimpleListItem({ title, id }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [TITLE, setTitle] = useState(title);
   const [ID, setId] = useState(id);
@@ -30,7 +30,6 @@ export default function SimpleListItem({ title, id, watchModif }) {
         }
       );
       if (http) {
-        watchModif(1);
         handleCloseModal();
       }
     } catch (error) {
@@ -44,9 +43,6 @@ export default function SimpleListItem({ title, id, watchModif }) {
         `https://note-app-backend.up.railway.app/signin/${user}/cols/delete/${id}`
         // `http://192.168.0.185:4000/signin/${user}/cols/delete/${id}`
       );
-      if (http) {
-        watchModif(1);
-      }
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +61,7 @@ export default function SimpleListItem({ title, id, watchModif }) {
       </View>
       <Modal
         visible={modalVisible}
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         onRequestClose={() => handleCloseModal()}
       >

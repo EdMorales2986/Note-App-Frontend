@@ -191,7 +191,7 @@ export const simpleListStyle = StyleSheet.create({
   container: {
     borderRadius: 20,
     elevation: 10,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "flex-start",
     alignSelf: "center",
     width: "90%",

@@ -7,7 +7,7 @@ import { getUser } from "./storage";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 
-export default function CircleButtonV2({ watchModif }) {
+export default function CircleButtonV2() {
   const [modalVisible, setModalVisible] = useState(false);
   const [colArray, setColArray] = useState([]);
   const [col, setCol] = useState("");
@@ -20,7 +20,6 @@ export default function CircleButtonV2({ watchModif }) {
       );
       if (http) {
         // console.log("update");
-        watchModif(1);
         setColArray(http.data);
       }
     } catch (error) {
@@ -30,9 +29,10 @@ export default function CircleButtonV2({ watchModif }) {
 
   useEffect(() => {
     getCollections();
-  }, [colArray]);
+  }, []);
 
   const handleOpenModal = () => {
+    getCollections();
     setModalVisible(true);
   };
 
@@ -53,7 +53,6 @@ export default function CircleButtonV2({ watchModif }) {
         }
       );
       if (http) {
-        watchModif(1);
         handleCloseModal();
       }
     } catch (error) {
@@ -73,7 +72,7 @@ export default function CircleButtonV2({ watchModif }) {
       </View>
       <Modal
         visible={modalVisible}
-        animationType="slide"
+        animationType="fade"
         onRequestClose={() => handleCloseModal()}
       >
         <View>

@@ -26,8 +26,7 @@ export default function NotesPage() {
 
   useEffect(() => {
     getNotes();
-    watchModif(0);
-  }, [noteModif]);
+  });
 
   return (
     <ImageBackground
@@ -47,12 +46,12 @@ export default function NotesPage() {
               content={item.content}
               collection={item.col}
               id={item._id}
-              watchModif={watchModif}
+              // watchModif={watchModif}
             />
           )}
         />
       </View>
-      <CircleButtonV2 watchModif={watchModif} />
+      <CircleButtonV2 /*watchModif={watchModif}*/ />
     </ImageBackground>
   );
 }

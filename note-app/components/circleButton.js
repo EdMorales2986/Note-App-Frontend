@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { getUser } from "./storage";
 import axios from "axios";
 
-export default function CircleButton({ watchModif }) {
+export default function CircleButton() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleOpenModal = () => {
@@ -28,7 +28,6 @@ export default function CircleButton({ watchModif }) {
         }
       );
       if (http) {
-        watchModif(1);
         handleCloseModal();
       }
     } catch (error) {
@@ -45,7 +44,7 @@ export default function CircleButton({ watchModif }) {
       </View>
       <Modal
         visible={modalVisible}
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         onRequestClose={() => handleCloseModal()}
       >
