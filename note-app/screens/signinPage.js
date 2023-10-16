@@ -9,6 +9,7 @@ import {
   Keyboard,
   ActivityIndicator,
   Image,
+  ImageBackground,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { signinStyles } from "../styles/globalStyles";
@@ -57,7 +58,7 @@ export default function SignInPage({ navigation }) {
     verifyJWT();
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 3000);
   }, []);
 
   const toggleShowPassword = () => {
@@ -67,8 +68,8 @@ export default function SignInPage({ navigation }) {
   const submitData = async (e) => {
     try {
       const http = await axios.post(
-        // "https://note-app-backend.up.railway.app/signin",
-        "http://192.168.0.185:4000/signin",
+        `https://note-app-backend.up.railway.app/signin`,
+        // "http://192.168.0.185:4000/signin",
         {
           alias: e.alias,
           password: e.password,
@@ -97,76 +98,107 @@ export default function SignInPage({ navigation }) {
     );
   }
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
-    <View style={signinStyles.container}>
-      <Image
-        source={require("../assets/custom/notes.png")}
-        style={{ width: 200, height: 200, resizeMode: "center" }}
-      />
-      <Formik
-        initialValues={{ alias: "", password: "" }}
-        onSubmit={(e) => submitData(e)}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View
+    <ImageBackground
+      source={require("../assets/custom/layered-waves-haikei.png")}
+      style={{ backgroundColor: "#fff", flex: 1 }}
+    >
+      <View style={signinStyles.container}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#fff",
+            borderRadius: 20,
+            padding: 20,
+            elevation: 20,
+            height: 450,
+          }}
+        >
+          <Image
+            source={require("../assets/custom/notes.png")}
             style={{
-              justifyContent: "center",
-              alignItems: "center",
+              width: 250,
+              height: 100,
+              resizeMode: "contain",
+              marginBottom: 45,
             }}
+          />
+          <Formik
+            initialValues={{ alias: "", password: "" }}
+            onSubmit={(e) => submitData(e)}
           >
-            <TextInput
-              style={signinStyles.inputs}
-              name="alias"
-              placeholder="User Name"
-              placeholderTextColor={"#092C70"}
-              onChangeText={handleChange("alias")}
-              onBlur={handleBlur("alias")}
-              value={values.alias}
-              autoCapitalize="none"
-            />
-            <View style={signinStyles.passwordBox}>
-              <TextInput
-                style={signinStyles.inputs}
-                name="password"
-                secureTextEntry={!showPassword}
-                placeholder="User Password"
-                placeholderTextColor={"#092C70"}
-                maxLength={30}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-                autoCapitalize="none"
-              />
-              <Pressable
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <View
                 style={{
-                  borderRadius: 100,
-                  alignItems: "center",
                   justifyContent: "center",
-                  right: 30,
-                  zIndex: 2,
+                  alignItems: "center",
                 }}
-                onPress={toggleShowPassword}
               >
-                <AntDesign
-                  style={signinStyles.icon}
-                  name="eyeo"
-                  size={24}
-                  color="black"
+                <TextInput
+                  style={signinStyles.inputs}
+                  name="alias"
+                  placeholder="User Name"
+                  placeholderTextColor={"#092C70"}
+                  onChangeText={handleChange("alias")}
+                  onBlur={handleBlur("alias")}
+                  value={values.alias}
+                  autoCapitalize="none"
                 />
-              </Pressable>
-            </View>
-            <View>
-              <Pressable style={signinStyles.btnWrapper} onPress={handleSubmit}>
-                <Text style={signinStyles.btnText}>Sign In</Text>
-              </Pressable>
-            </View>
-          </View>
-        )}
-      </Formik>
-      <Pressable style={{ marginTop: 10 }} onPress={goToSignUp}>
-        <Text> Don't have an account </Text>
-      </Pressable>
-    </View>
-    // </TouchableWithoutFeedback>
+                <View style={signinStyles.passwordBox}>
+                  <TextInput
+                    style={signinStyles.inputs}
+                    name="password"
+                    secureTextEntry={!showPassword}
+                    placeholder="User Password"
+                    placeholderTextColor={"#092C70"}
+                    maxLength={30}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                    autoCapitalize="none"
+                  />
+                  <Pressable
+                    style={{
+                      borderRadius: 100,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      right: 30,
+                      zIndex: 2,
+                    }}
+                    onPress={toggleShowPassword}
+                  >
+                    <AntDesign
+                      style={signinStyles.icon}
+                      name="eyeo"
+                      size={24}
+                      color="black"
+                    />
+                  </Pressable>
+                </View>
+                <View>
+                  <Pressable
+                    style={signinStyles.btnWrapper}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={signinStyles.btnText}>Sign In</Text>
+                  </Pressable>
+                </View>
+              </View>
+            )}
+          </Formik>
+          <Pressable
+            style={{ marginTop: 10, padding: 10 }}
+            onPress={goToSignUp}
+          >
+            <Text
+              style={{ color: "#1A51BB", fontWeight: "bold", fontSize: 24 }}
+            >
+              {" "}
+              Don't have an account{" "}
+            </Text>
+          </Pressable>
+        </View>
+      </View>
+    </ImageBackground>
   );
 }

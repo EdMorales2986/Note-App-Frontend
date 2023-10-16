@@ -7,7 +7,13 @@ import { getUser } from "./storage";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
 
-export default function ComplexListItem({ title, content, id, watchModif }) {
+export default function ComplexListItem({
+  title,
+  content,
+  id,
+  collection,
+  watchModif,
+}) {
   const [modalVisible, setModalVisible] = useState(false);
   const [TITLE, setTitle] = useState(title);
   const [CONTENT, setContent] = useState(content);
@@ -23,6 +29,7 @@ export default function ComplexListItem({ title, content, id, watchModif }) {
       );
       if (http) {
         // console.log("update");
+        watchModif(1);
         setColArray(http.data);
       }
     } catch (error) {
@@ -32,7 +39,7 @@ export default function ComplexListItem({ title, content, id, watchModif }) {
 
   useEffect(() => {
     getCollections();
-  });
+  }, [colArray]);
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -81,6 +88,7 @@ export default function ComplexListItem({ title, content, id, watchModif }) {
     <>
       <View style={complexListStyle.container}>
         <Text style={complexListStyle.title}>{title}</Text>
+        <Text style={complexListStyle.col}>{collection}</Text>
         <Pressable style={complexListStyle.wrapper1} onPress={handleOpenModal}>
           <AntDesign name="edit" size={24} color="black" />
         </Pressable>
@@ -151,7 +159,7 @@ export default function ComplexListItem({ title, content, id, watchModif }) {
                       style={complexListStyle.btnWrapper}
                       onPress={handleSubmit}
                     >
-                      <Text style={complexListStyle.btnText}>Create</Text>
+                      <Text style={complexListStyle.btnText}>Update</Text>
                     </Pressable>
                     <Pressable
                       style={complexListStyle.btnWrapper}

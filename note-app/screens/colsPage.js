@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, FlatList } from "react-native";
+import { View, ImageBackground, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getUser } from "../components/storage";
 import CircleButton from "../components/circleButton";
@@ -30,7 +30,10 @@ export default function ColsPage() {
   }, [colModif]);
 
   return (
-    <View>
+    <ImageBackground
+      source={require("../assets/custom/layered-waves-haikei.png")}
+      style={{ backgroundColor: "#fff", flex: 1 }}
+    >
       <View>
         <FlatList
           data={colArray}
@@ -48,6 +51,6 @@ export default function ColsPage() {
         />
       </View>
       <CircleButton watchModif={watchModif} />
-    </View>
+    </ImageBackground>
   );
 }

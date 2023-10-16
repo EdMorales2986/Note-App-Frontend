@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable, FlatList } from "react-native";
+import { View, ImageBackground, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { getUser } from "../components/storage";
 import CircleButtonV2 from "../components/circleButtonV2";
@@ -30,7 +30,10 @@ export default function NotesPage() {
   }, [noteModif]);
 
   return (
-    <View>
+    <ImageBackground
+      source={require("../assets/custom/layered-waves-haikei.png")}
+      style={{ backgroundColor: "#fff", flex: 1 }}
+    >
       <View>
         <FlatList
           data={noteArray}
@@ -42,7 +45,7 @@ export default function NotesPage() {
             <ComplexListItem
               title={item.title}
               content={item.content}
-              col={item.col}
+              collection={item.col}
               id={item._id}
               watchModif={watchModif}
             />
@@ -50,6 +53,6 @@ export default function NotesPage() {
         />
       </View>
       <CircleButtonV2 watchModif={watchModif} />
-    </View>
+    </ImageBackground>
   );
 }

@@ -4,7 +4,7 @@ export const signinStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    paddingTop: 200,
+    paddingTop: 100,
     // backgroundColor: "grey",
   },
   inputs: {
@@ -14,7 +14,7 @@ export const signinStyles = StyleSheet.create({
     color: "#092C70",
     padding: 8,
     margin: 10,
-    width: 200,
+    width: 350,
     borderRadius: 50,
   },
   icon: {
@@ -29,7 +29,7 @@ export const signinStyles = StyleSheet.create({
     justifyContent: "center",
   },
   btnWrapper: {
-    width: 100,
+    width: 200,
     marginTop: 10,
     backgroundColor: "#1A51BB",
     justifyContent: "center",
@@ -53,7 +53,7 @@ export const signupStyles = StyleSheet.create({
     color: "#092C70",
     padding: 8,
     margin: 10,
-    width: 200,
+    width: 350,
     borderRadius: 50,
   },
   icon: {
@@ -68,7 +68,7 @@ export const signupStyles = StyleSheet.create({
     justifyContent: "center",
   },
   btnWrapper: {
-    width: 100,
+    width: 200,
     marginTop: 10,
     backgroundColor: "#1A51BB",
     justifyContent: "center",
@@ -91,7 +91,7 @@ export const accountStyles = StyleSheet.create({
     color: "#092C70",
     padding: 8,
     margin: 10,
-    width: 200,
+    width: "80%",
     borderRadius: 50,
   },
   btnWrapper: {
@@ -110,7 +110,7 @@ export const accountStyles = StyleSheet.create({
     color: "#092C70",
     padding: 8,
     margin: 10,
-    width: 200,
+    width: "80%",
     borderRadius: 50,
   },
   btnWrapperDelete: {
@@ -152,7 +152,7 @@ export const circleButtonStyle = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
-    backgroundColor: "#1A51BB",
+    backgroundColor: "#152F64",
   },
   modalContainer: {
     flex: 1,
@@ -248,7 +248,7 @@ export const circleButtonStyleV2 = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 100,
-    backgroundColor: "#1A51BB",
+    backgroundColor: "#152F64",
   },
   modalContainer: {
     flex: 1,
@@ -320,6 +320,12 @@ export const complexListStyle = StyleSheet.create({
     backgroundColor: "#fff",
   },
   title: { fontWeight: "bold", fontSize: 24, textTransform: "uppercase" },
+  col: {
+    fontWeight: "bold",
+    fontSize: 24,
+    textTransform: "uppercase",
+    color: "#1A51BB",
+  },
   modalContainer: {
     flex: 1,
     alignItems: "center",

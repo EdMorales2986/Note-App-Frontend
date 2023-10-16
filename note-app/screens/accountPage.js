@@ -61,7 +61,6 @@ export default function AccountPage({ navigation }) {
   };
 
   return (
-    // <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={accountStyles.container}>
       <Image
         style={{
@@ -195,6 +194,5 @@ export default function AccountPage({ navigation }) {
         </Formik>
       </View>
     </View>
-    // </TouchableWithoutFeedback>
   );
 }

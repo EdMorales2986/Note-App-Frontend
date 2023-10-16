@@ -20,6 +20,7 @@ export default function CircleButtonV2({ watchModif }) {
       );
       if (http) {
         // console.log("update");
+        watchModif(1);
         setColArray(http.data);
       }
     } catch (error) {
@@ -29,7 +30,7 @@ export default function CircleButtonV2({ watchModif }) {
 
   useEffect(() => {
     getCollections();
-  });
+  }, [colArray]);
 
   const handleOpenModal = () => {
     setModalVisible(true);
