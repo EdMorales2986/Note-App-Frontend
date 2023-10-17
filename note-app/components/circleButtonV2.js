@@ -1,4 +1,11 @@
-import { View, Text, TextInput, Pressable, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Modal,
+  useWindowDimensions,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { circleButtonStyleV2 } from "../styles/globalStyles";
@@ -6,11 +13,13 @@ import { Formik } from "formik";
 import { getUser } from "./storage";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
+import CustomWrapper from "../components/customWrapper";
 
 export default function CircleButtonV2() {
   const [modalVisible, setModalVisible] = useState(false);
   const [colArray, setColArray] = useState([]);
   const [col, setCol] = useState("");
+  const { height, width } = useWindowDimensions();
 
   async function getCollections() {
     const user = await getUser();
@@ -62,7 +71,16 @@ export default function CircleButtonV2() {
 
   return (
     <>
-      <View style={circleButtonStyleV2.container}>
+      <View
+        style={{
+          position: "absolute",
+          width: 55,
+          height: 55,
+          borderRadius: 100,
+          bottom: height * 0.01,
+          right: width * 0.01,
+        }}
+      >
         <Pressable
           style={circleButtonStyleV2.wrapper}
           onPress={handleOpenModal}
@@ -75,77 +93,79 @@ export default function CircleButtonV2() {
         animationType="fade"
         onRequestClose={() => handleCloseModal()}
       >
-        <View>
+        <CustomWrapper>
           <View>
-            <Formik
-              initialValues={{ title: "", content: "", col: "" }}
-              onSubmit={(e) => submitData(e)}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View
-                  style={{
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginTop: 20,
-                  }}
-                >
-                  <TextInput
-                    style={circleButtonStyleV2.inputs}
-                    name="title"
-                    placeholder="Note Title"
-                    placeholderTextColor={"#092C70"}
-                    onChangeText={handleChange("title")}
-                    onBlur={handleBlur("title")}
-                    value={values.title}
-                    autoCapitalize="none"
-                  />
-                  <View style={circleButtonStyleV2.picker}>
-                    <Picker
-                      prompt="Choose a collection"
-                      name="col"
-                      selectedValue={values.col}
-                      onValueChange={handleChange("col")}
-                    >
-                      <Picker.Item label="Default" value="" />
-                      {colArray.map((item) => (
-                        <Picker.Item
-                          key={item._id}
-                          label={item.name}
-                          value={item.name}
-                        />
-                      ))}
-                    </Picker>
+            <View>
+              <Formik
+                initialValues={{ title: "", content: "", col: "" }}
+                onSubmit={(e) => submitData(e)}
+              >
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                  <View
+                    style={{
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginTop: 20,
+                    }}
+                  >
+                    <TextInput
+                      style={circleButtonStyleV2.inputs}
+                      name="title"
+                      placeholder="Note Title"
+                      placeholderTextColor={"#092C70"}
+                      onChangeText={handleChange("title")}
+                      onBlur={handleBlur("title")}
+                      value={values.title}
+                      autoCapitalize="none"
+                    />
+                    <View style={circleButtonStyleV2.picker}>
+                      <Picker
+                        prompt="Choose a collection"
+                        name="col"
+                        selectedValue={values.col}
+                        onValueChange={handleChange("col")}
+                      >
+                        <Picker.Item label="Default" value="" />
+                        {colArray.map((item) => (
+                          <Picker.Item
+                            key={item._id}
+                            label={item.name}
+                            value={item.name}
+                          />
+                        ))}
+                      </Picker>
+                    </View>
+                    <TextInput
+                      style={circleButtonStyleV2.inputsContent}
+                      multiline
+                      name="content"
+                      placeholder="Note Content"
+                      placeholderTextColor={"#092C70"}
+                      onChangeText={handleChange("content")}
+                      onBlur={handleBlur("content")}
+                      value={values.content}
+                      autoCapitalize="none"
+                    />
+                    <View style={{ flexDirection: "row", gap: 10 }}>
+                      <Pressable
+                        style={circleButtonStyleV2.btnWrapper}
+                        onPress={handleSubmit}
+                      >
+                        <Text style={circleButtonStyleV2.btnText}>Create</Text>
+                      </Pressable>
+                      <Pressable
+                        style={circleButtonStyleV2.btnWrapper}
+                        onPress={handleCloseModal}
+                      >
+                        <Text style={circleButtonStyleV2.btnText}>Close</Text>
+                      </Pressable>
+                    </View>
                   </View>
-                  <TextInput
-                    style={circleButtonStyleV2.inputsContent}
-                    multiline
-                    name="content"
-                    placeholder="Note Content"
-                    placeholderTextColor={"#092C70"}
-                    onChangeText={handleChange("content")}
-                    onBlur={handleBlur("content")}
-                    value={values.content}
-                    autoCapitalize="none"
-                  />
-                  <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Pressable
-                      style={circleButtonStyleV2.btnWrapper}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={circleButtonStyleV2.btnText}>Create</Text>
-                    </Pressable>
-                    <Pressable
-                      style={circleButtonStyleV2.btnWrapper}
-                      onPress={handleCloseModal}
-                    >
-                      <Text style={circleButtonStyleV2.btnText}>Close</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              )}
-            </Formik>
+                )}
+              </Formik>
+            </View>
           </View>
-        </View>
+        </CustomWrapper>
       </Modal>
     </>
   );

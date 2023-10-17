@@ -14,7 +14,7 @@ export const signinStyles = StyleSheet.create({
     color: "#092C70",
     padding: 8,
     margin: 10,
-    width: 350,
+    width: 300,
     borderRadius: 50,
   },
   icon: {
@@ -53,7 +53,7 @@ export const signupStyles = StyleSheet.create({
     color: "#092C70",
     padding: 8,
     margin: 10,
-    width: 350,
+    width: 300,
     borderRadius: 50,
   },
   icon: {
@@ -139,14 +139,6 @@ export const accountStyles = StyleSheet.create({
 });
 
 export const circleButtonStyle = StyleSheet.create({
-  container: {
-    position: "absolute",
-    width: 55,
-    height: 55,
-    borderRadius: 100,
-    top: 880,
-    right: 10,
-  },
   wrapper: {
     flex: 1,
     justifyContent: "center",
@@ -235,14 +227,6 @@ export const simpleListStyle = StyleSheet.create({
 });
 
 export const circleButtonStyleV2 = StyleSheet.create({
-  container: {
-    position: "absolute",
-    width: 55,
-    height: 55,
-    borderRadius: 100,
-    top: 880,
-    right: 10,
-  },
   wrapper: {
     flex: 1,
     justifyContent: "center",

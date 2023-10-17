@@ -1,16 +1,9 @@
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TextInput,
-  Pressable,
-  Image,
-} from "react-native";
+import { View, Text, TextInput, Pressable, Image } from "react-native";
 import React, { useState } from "react";
 import { Formik } from "formik";
 import { accountStyles } from "../styles/globalStyles";
 import { getUser, removeUser, removeData } from "../components/storage";
+import CustomWrapper from "../components/customWrapper";
 import axios from "axios";
 
 export default function AccountPage({ navigation }) {
@@ -61,138 +54,140 @@ export default function AccountPage({ navigation }) {
   };
 
   return (
-    <View style={accountStyles.container}>
-      <Image
-        style={{
-          resizeMode: "center",
-          width: 300,
-          height: 100,
-          marginTop: 30,
-        }}
-        source={require("../assets/custom/notes.png")}
-      />
-      <View style={accountStyles.F1}>
-        <Formik
-          initialValues={{
-            email: "",
-            name: "",
-            lname: "",
-            oldPass: "",
-            newPass: "",
+    <CustomWrapper>
+      <View style={accountStyles.container}>
+        <Image
+          style={{
+            resizeMode: "center",
+            width: 300,
+            height: 100,
+            marginTop: 30,
           }}
-          onSubmit={(e) => submitData(e)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <TextInput
-                style={accountStyles.inputs}
-                name="email"
-                placeholder="Email"
-                placeholderTextColor={"#092C70"}
-                onChangeText={handleChange("email")}
-                onBlur={handleBlur("email")}
-                value={values.email}
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={accountStyles.inputs}
-                name="name"
-                placeholder="Name"
-                placeholderTextColor={"#092C70"}
-                onChangeText={handleChange("name")}
-                onBlur={handleBlur("name")}
-                value={values.name}
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={accountStyles.inputs}
-                name="lname"
-                placeholder="Last name"
-                placeholderTextColor={"#092C70"}
-                onChangeText={handleChange("lname")}
-                onBlur={handleBlur("lname")}
-                value={values.lname}
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={accountStyles.inputs}
-                name="oldPass"
-                placeholder="User Old Password"
-                placeholderTextColor={"#092C70"}
-                maxLength={30}
-                onChangeText={handleChange("oldPass")}
-                onBlur={handleBlur("oldPass")}
-                value={values.oldPass}
-                autoCapitalize="none"
-              />
-              <TextInput
-                style={accountStyles.inputs}
-                name="newPass"
-                placeholder="User New Password"
-                placeholderTextColor={"#092C70"}
-                maxLength={30}
-                onChangeText={handleChange("newPass")}
-                onBlur={handleBlur("newPass")}
-                value={values.newPass}
-                autoCapitalize="none"
-              />
-              <View>
-                <Pressable
-                  style={accountStyles.btnWrapper}
-                  onPress={handleSubmit}
-                >
-                  <Text style={accountStyles.btnText}>Update</Text>
-                </Pressable>
+          source={require("../assets/custom/notes.png")}
+        />
+        <View style={accountStyles.F1}>
+          <Formik
+            initialValues={{
+              email: "",
+              name: "",
+              lname: "",
+              oldPass: "",
+              newPass: "",
+            }}
+            onSubmit={(e) => submitData(e)}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <TextInput
+                  style={accountStyles.inputs}
+                  name="email"
+                  placeholder="Email"
+                  placeholderTextColor={"#092C70"}
+                  onChangeText={handleChange("email")}
+                  onBlur={handleBlur("email")}
+                  value={values.email}
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={accountStyles.inputs}
+                  name="name"
+                  placeholder="Name"
+                  placeholderTextColor={"#092C70"}
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={accountStyles.inputs}
+                  name="lname"
+                  placeholder="Last name"
+                  placeholderTextColor={"#092C70"}
+                  onChangeText={handleChange("lname")}
+                  onBlur={handleBlur("lname")}
+                  value={values.lname}
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={accountStyles.inputs}
+                  name="oldPass"
+                  placeholder="User Old Password"
+                  placeholderTextColor={"#092C70"}
+                  maxLength={30}
+                  onChangeText={handleChange("oldPass")}
+                  onBlur={handleBlur("oldPass")}
+                  value={values.oldPass}
+                  autoCapitalize="none"
+                />
+                <TextInput
+                  style={accountStyles.inputs}
+                  name="newPass"
+                  placeholder="User New Password"
+                  placeholderTextColor={"#092C70"}
+                  maxLength={30}
+                  onChangeText={handleChange("newPass")}
+                  onBlur={handleBlur("newPass")}
+                  value={values.newPass}
+                  autoCapitalize="none"
+                />
+                <View>
+                  <Pressable
+                    style={accountStyles.btnWrapper}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={accountStyles.btnText}>Update</Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
-          )}
-        </Formik>
-      </View>
+            )}
+          </Formik>
+        </View>
 
-      <View style={accountStyles.F2}>
-        <Formik
-          initialValues={{
-            password: "",
-          }}
-          onSubmit={(e) => submitDeletion(e)}
-        >
-          {({ handleChange, handleBlur, handleSubmit, values }) => (
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <TextInput
-                style={accountStyles.inputsDelete}
-                name="password"
-                placeholder="User Current Password"
-                placeholderTextColor={"#092C70"}
-                maxLength={30}
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                value={values.password}
-                autoCapitalize="none"
-              />
-              <View>
-                <Pressable
-                  style={accountStyles.btnWrapperDelete}
-                  onPress={handleSubmit}
-                >
-                  <Text style={accountStyles.btnTextDelete}>
-                    Delete Account
-                  </Text>
-                </Pressable>
+        <View style={accountStyles.F2}>
+          <Formik
+            initialValues={{
+              password: "",
+            }}
+            onSubmit={(e) => submitDeletion(e)}
+          >
+            {({ handleChange, handleBlur, handleSubmit, values }) => (
+              <View
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <TextInput
+                  style={accountStyles.inputsDelete}
+                  name="password"
+                  placeholder="User Current Password"
+                  placeholderTextColor={"#092C70"}
+                  maxLength={30}
+                  onChangeText={handleChange("password")}
+                  onBlur={handleBlur("password")}
+                  value={values.password}
+                  autoCapitalize="none"
+                />
+                <View>
+                  <Pressable
+                    style={accountStyles.btnWrapperDelete}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={accountStyles.btnTextDelete}>
+                      Delete Account
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
-          )}
-        </Formik>
+            )}
+          </Formik>
+        </View>
       </View>
-    </View>
+    </CustomWrapper>
   );
 }

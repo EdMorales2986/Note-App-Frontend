@@ -6,6 +6,7 @@ import { Formik } from "formik";
 import { getUser } from "./storage";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
+import CustomWrapper from "../components/customWrapper";
 
 export default function ComplexListItem({ title, content, id, collection }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -92,77 +93,83 @@ export default function ComplexListItem({ title, content, id, collection }) {
         animationType="fade"
         onRequestClose={() => handleCloseModal()}
       >
-        <View>
+        <CustomWrapper>
           <View>
-            <Formik
-              initialValues={{ title: title, content: content, col: col }}
-              onSubmit={(e) => submitData(e)}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View
-                  style={{
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    marginTop: 20,
-                  }}
-                >
-                  <TextInput
-                    style={complexListStyle.inputs}
-                    name="title"
-                    placeholder="Note Title"
-                    placeholderTextColor={"#092C70"}
-                    onChangeText={handleChange("title")}
-                    onBlur={handleBlur("title")}
-                    value={values.title}
-                    autoCapitalize="none"
-                  />
-                  <View style={complexListStyle.picker}>
-                    <Picker
-                      prompt="Choose a collection"
-                      name="col"
-                      selectedValue={values.col}
-                      onValueChange={handleChange("col")}
-                    >
-                      <Picker.Item label="Default" value="" />
-                      {colArray.map((item) => (
-                        <Picker.Item
-                          key={item._id}
-                          label={item.name}
-                          value={item.name}
-                        />
-                      ))}
-                    </Picker>
+            <View>
+              <Formik
+                initialValues={{
+                  title: title,
+                  content: content,
+                  col: collection,
+                }}
+                onSubmit={(e) => submitData(e)}
+              >
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                  <View
+                    style={{
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      marginTop: 20,
+                    }}
+                  >
+                    <TextInput
+                      style={complexListStyle.inputs}
+                      name="title"
+                      placeholder="Note Title"
+                      placeholderTextColor={"#092C70"}
+                      onChangeText={handleChange("title")}
+                      onBlur={handleBlur("title")}
+                      value={values.title}
+                      autoCapitalize="none"
+                    />
+                    <View style={complexListStyle.picker}>
+                      <Picker
+                        prompt="Choose a collection"
+                        name="col"
+                        selectedValue={values.col}
+                        onValueChange={handleChange("col")}
+                      >
+                        <Picker.Item label="Default" value="" />
+                        {colArray.map((item) => (
+                          <Picker.Item
+                            key={item._id}
+                            label={item.name}
+                            value={item.name}
+                          />
+                        ))}
+                      </Picker>
+                    </View>
+                    <TextInput
+                      style={complexListStyle.inputsContent}
+                      multiline
+                      name="content"
+                      placeholder="Note Content"
+                      placeholderTextColor={"#092C70"}
+                      onChangeText={handleChange("content")}
+                      onBlur={handleBlur("content")}
+                      value={values.content}
+                      autoCapitalize="none"
+                    />
+                    <View style={{ flexDirection: "row", gap: 10 }}>
+                      <Pressable
+                        style={complexListStyle.btnWrapper}
+                        onPress={handleSubmit}
+                      >
+                        <Text style={complexListStyle.btnText}>Update</Text>
+                      </Pressable>
+                      <Pressable
+                        style={complexListStyle.btnWrapper}
+                        onPress={handleCloseModal}
+                      >
+                        <Text style={complexListStyle.btnText}>Close</Text>
+                      </Pressable>
+                    </View>
                   </View>
-                  <TextInput
-                    style={complexListStyle.inputsContent}
-                    multiline
-                    name="content"
-                    placeholder="Note Content"
-                    placeholderTextColor={"#092C70"}
-                    onChangeText={handleChange("content")}
-                    onBlur={handleBlur("content")}
-                    value={values.content}
-                    autoCapitalize="none"
-                  />
-                  <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Pressable
-                      style={complexListStyle.btnWrapper}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={complexListStyle.btnText}>Update</Text>
-                    </Pressable>
-                    <Pressable
-                      style={complexListStyle.btnWrapper}
-                      onPress={handleCloseModal}
-                    >
-                      <Text style={complexListStyle.btnText}>Close</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              )}
-            </Formik>
+                )}
+              </Formik>
+            </View>
           </View>
-        </View>
+        </CustomWrapper>
       </Modal>
     </>
   );

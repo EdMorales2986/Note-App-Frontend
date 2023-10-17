@@ -1,4 +1,13 @@
-import { View, Text, TextInput, Pressable, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Pressable,
+  Modal,
+  useWindowDimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { circleButtonStyle } from "../styles/globalStyles";
@@ -8,6 +17,7 @@ import axios from "axios";
 
 export default function CircleButton() {
   const [modalVisible, setModalVisible] = useState(false);
+  const { height, width } = useWindowDimensions();
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -37,7 +47,16 @@ export default function CircleButton() {
 
   return (
     <>
-      <View style={circleButtonStyle.container}>
+      <View
+        style={{
+          position: "absolute",
+          width: 55,
+          height: 55,
+          borderRadius: 100,
+          bottom: height * 0.01,
+          right: width * 0.01,
+        }}
+      >
         <Pressable style={circleButtonStyle.wrapper} onPress={handleOpenModal}>
           <AntDesign name="plus" size={38} color="#fff" />
         </Pressable>
@@ -48,48 +67,50 @@ export default function CircleButton() {
         transparent={true}
         onRequestClose={() => handleCloseModal()}
       >
-        <View style={circleButtonStyle.modalContainer}>
-          <View style={circleButtonStyle.modalBody}>
-            <Formik
-              initialValues={{ name: "" }}
-              onSubmit={(e) => submitData(e)}
-            >
-              {({ handleChange, handleBlur, handleSubmit, values }) => (
-                <View
-                  style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <TextInput
-                    style={circleButtonStyle.inputs}
-                    name="name"
-                    placeholder="Collection Name"
-                    placeholderTextColor={"#092C70"}
-                    onChangeText={handleChange("name")}
-                    onBlur={handleBlur("name")}
-                    value={values.name}
-                    autoCapitalize="none"
-                  />
-                  <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Pressable
-                      style={circleButtonStyle.btnWrapper}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={circleButtonStyle.btnText}>Create</Text>
-                    </Pressable>
-                    <Pressable
-                      style={circleButtonStyle.btnWrapper}
-                      onPress={handleCloseModal}
-                    >
-                      <Text style={circleButtonStyle.btnText}>Close</Text>
-                    </Pressable>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={circleButtonStyle.modalContainer}>
+            <View style={circleButtonStyle.modalBody}>
+              <Formik
+                initialValues={{ name: "" }}
+                onSubmit={(e) => submitData(e)}
+              >
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TextInput
+                      style={circleButtonStyle.inputs}
+                      name="name"
+                      placeholder="Collection Name"
+                      placeholderTextColor={"#092C70"}
+                      onChangeText={handleChange("name")}
+                      onBlur={handleBlur("name")}
+                      value={values.name}
+                      autoCapitalize="none"
+                    />
+                    <View style={{ flexDirection: "row", gap: 10 }}>
+                      <Pressable
+                        style={circleButtonStyle.btnWrapper}
+                        onPress={handleSubmit}
+                      >
+                        <Text style={circleButtonStyle.btnText}>Create</Text>
+                      </Pressable>
+                      <Pressable
+                        style={circleButtonStyle.btnWrapper}
+                        onPress={handleCloseModal}
+                      >
+                        <Text style={circleButtonStyle.btnText}>Close</Text>
+                      </Pressable>
+                    </View>
                   </View>
-                </View>
-              )}
-            </Formik>
+                )}
+              </Formik>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </Modal>
     </>
   );
